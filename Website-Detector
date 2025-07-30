@@ -1,1 +1,22 @@
+import requests
+
+def detect_platform(url):
+    try:
+        if not url.startswith("http"):
+            url = "http://" + url
+        response = requests.get(url, timeout=5)
+        html = response.text.lower()
+
+        if "wix.com" in html:
+            return "Wix"
+        elif "godaddy.com" in html or "secureserver.net" in html:
+            return "GoDaddy"
+        elif "shopify.com" in html:
+            return "Shopify"
+        elif "wordpress" in html:
+            return "WordPress"
+        else:
+            return "Platform not identified"
+    except Exception as e:
+        return f"Error: {str(e)}"
 
